@@ -2,11 +2,11 @@ The dataset was downloaded from the URL as described in README. The datasets of 
 subject_train, X_train, and y_train were loaded into R and processed. The training data and testing data were
 combined. The data of subject, X (which contains the selected feature variables) and y (contains the class of 
 activities) were also combined. Only the variables measuring on the mean and standard deviation were selected
-(see the list below). This dataset were grouped by the subject and activity to calculate the mean of each feature 
-variables.  The result was save as "bodyMoving_ave".
+(see the list below). The data were then grouped by the subject and activity to calculate the mean of each
+selected measurement.  The result was save as "bodyMoving_ave.Rda" with 81 columns and 180 rows.
 
 
-The following features were selected as the feature variables in dataset  "bodyMoving_avg". The numbers ahead 
+The following 79 features were selected as the feature variables in dataset "bodyMoving_avg". The numbers ahead 
 of the names indicate the position of the feature variables in the original datasets X_train and X_test.
 
 1 tBodyAcc-mean()-X
