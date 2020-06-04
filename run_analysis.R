@@ -29,23 +29,24 @@ y <- rbind(y_train,y_test)
 #extract the measurements on the mean and standard deviation for each measurement
 features <- read.table(raw[2],stringsAsFactors=FALSE)
 cols <- grep("(mean|std)", features[,2])
-
-#.Uses descriptive activity names to name the activities in the data set
-activities <- read.table(raw[1],stringsAsFactors=FALSE)
-activity <- merge(y,activities,by="V1",sort=FALSE)[,2]
-bodyMoving <- cbind(subject, X[,cols], activity)
+bodyMoving <- cbind(subject, X[,cols], y)
 
 #name the variables
-names(bodyMoving) <- c("subject", features[cols,2], "activity")
+names(bodyMoving) <- c("subject", features[cols,2], "activityCode")
 
-#5.creates a second, independent tidy data set with the average of each variable for each
-#  activity and each subject.
+#Uses descriptive activity names to name the activities in the data set
+activities <- read.table(raw[1],stringsAsFactors=FALSE)
+names(activities) <- c("activityCode", "activityName")
+bodyMoving <- merge(bodyMoving,activities,by="activityCode")
+
+#creates a second, independent tidy data set with the average of each variable for each
+#activity and each subject.
 library(dplyr)
 library(tidyr)
-bodyMoving_avg <- bodyMoving %>%
-                  gather(vars, values, -c(subject,activity)) %>% 
-                  group_by(subject, activity, vars) %>%
+bodyMoving_avg <- bodyMoving[,-1] %>%
+                  gather(vars, values, -c(subject,activityName)) %>% 
+                  group_by(subject, activityName, vars) %>%
                   summarize(AVG = mean(values)) %>%
                   spread(vars, AVG)
 
-
+View(bodyMoving_avg)
